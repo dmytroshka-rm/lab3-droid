@@ -47,12 +47,22 @@ public class TeamBattle implements Battle {
     }
 
     private boolean isTeamAlive(List<Droid> team) {
-        return team.stream().anyMatch(Droid::isAlive);
+        for (Droid d : team) {
+            if (d.isAlive()) return true;
+        }
+        return false;
     }
 
     private Droid chooseRandomAlive(List<Droid> team) {
-        List<Droid> alive = team.stream().filter(Droid::isAlive).toList();
+        List<Droid> alive = new ArrayList<>();
+
+        for (Droid d : team) {
+            if (d.isAlive()) {
+                alive.add(d);
+            }
+        }
         if (alive.isEmpty()) return null;
+
         return alive.get(random.nextInt(alive.size()));
     }
 
